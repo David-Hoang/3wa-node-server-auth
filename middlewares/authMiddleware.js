@@ -11,11 +11,12 @@ export const verifyUser = async (req,res,next) => {
             return res.status(401).json({ message : 'Token is missing, access denied.'})
         }
 
-        const verifyToken = await jwt.verify(token.split(" ")[1], JWT_SECRET);
+        const verifyToken = jwt.verify(token.split(" ")[1], JWT_SECRET);
 
         if(!verifyToken){
             return res.status(401).json({ message : 'Token is invalid, access denied.'})
         }else {
+            req.user = verifyToken;
             next()
         }
 

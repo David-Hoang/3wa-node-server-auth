@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import { verifyUser } from "../middlewares/authMiddlware.js";
+import { verifyUser } from "../middlewares/authMiddleware.js";
 
 const eventRouter = Router()
 
