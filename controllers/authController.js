@@ -43,14 +43,15 @@ export const login =  async (req, res) => {
     
     try {
         const user = await User.findOne({ email })
+
+        if(!user) return res.status(401).json({ message : 'Email or password invalid'})
+            
         const comparePassword = await bcrypt.compare(password, user.password);
 
-        if(!user || !comparePassword){
-            return res.status(404).json({ message : 'Email or password invalid'})
-        }else{
-            const token = jwt.sign({id: user._id}, JWT_SECRET)
-            return res.status(200).json({ token : token})
-        }
+        if(!comparePassword) return res.status(401).json({ message : 'Email or password invalid'})
+
+        const token = jwt.sign({id: user._id}, JWT_SECRET)
+        return res.status(200).json({ message : `Welcome ${user.first_name}` ,token : token})
 
     } catch (error) {
         return res.status(500).json({ message : `Internal server error`, error})
