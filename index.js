@@ -2,8 +2,9 @@ import express from 'express'
 import 'dotenv/config'
 import connectDB from './database/client.js'
 import authRouter from "./routes/auth.js";
-import events from "./routes/events.js";
-import servicesRouter from './routes/services.js'
+import eventsRouter from "./routes/events.js";
+import servicesRouter from './routes/services.js';
+import usersRouter from './routes/users.js';
 
 import cors from 'cors';
 
@@ -15,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended : true}))
 app.use(cors());
 
-app.use('/api', authRouter, events, servicesRouter);
+app.use('/api', authRouter, eventsRouter, servicesRouter, usersRouter);
 
 connectDB()
 app.listen(8000, () => {
